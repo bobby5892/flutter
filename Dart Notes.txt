@@ -1,0 +1,250 @@
+/* DartPad https://dartpad.dartlang.org/  */
+
+----------Language Specific Notes-----------
+Everything is a "object". So functions are objects - this gets interesting later - see breaks/continue notes
+
+--------------------------------------------
+
+Dart Apps Start at
+void main()  
+similar to c++ but no return code
+
+/* Printing  */
+print("test");
+print(4-1);
+
+/* Built in DataTypes */
+int double string bool list maps runes symbols
+and more
+
+var does the autoatic datatype selection like other languages
+
+/* String interpolation */
+String name = "bob";
+print("Hello ${bob}");  
+
+Another example
+print("Calc ${5+10}");
+// Calc 15
+print("Calc ${5+10 * (10+2)"); /// You can also use () within {} 
+
+
+/* Final and Const */
+
+final NAME = "bob";
+const NAMER = "bob";
+
+final can only be set once and is initialized when accessed
+So final is basically can only be set once.
+
+/* conditionals */
+These are the same as JS,C#,C++ 
+if statements are normal.
+
+var answer = a < b ? a : b;
+
+Can use to set defaults
+print(name ?? "Guest");   // assuming name is string and null
+
+/* logic */
+switch statements are like C++
+loops are normal
+
+break has some additional functionality
+example
+
+myOuterLoop: for(int i=1; i<= 3; i++){
+	for(int j=1; j < 3; j++){
+		if(i==2 && j==2){
+			break myOuterLoop; // this ends the nested loop
+		}
+	}
+}
+
+continue has some additional functionality as well
+
+myOuterLoop: for(int i=1; i<= 3; i++){
+	for(int j=1; j < 3; j++){
+		if(i==2 && j==2){
+			continue myOuterLoop;   // This skips the rest of the iteration 
+		}
+		print("$i $j");
+	}
+}
+
+
+/* functions */
+Include datatype
+// Return type is optional but why would you not use it lol.
+int findArea(int length, int width){
+	return lengther * width;
+}
+
+Lambda works
+void printTest(string test) => print("Test: ${$test}");
+
+also function expressions
+Function addNumbers = (int a, int b)=>print(a+b);
+
+
+Optional Paramters
+put [] around them
+
+void printCities(String name1,[String name2]){
+	print(name1);
+	// note name2 is null
+}
+
+Named Parameters // then order doesn't matter when you use them
+int findVolume (int length, { int breadth, int height} ){
+	return length * breadth * height;
+}
+
+usage
+var result = findVolume(2, breadth:3, height:10);
+
+
+Named Parameter with default
+int findVolume (int length, { int breadth=5, int height=5} ){
+	return length * breadth * height;
+}
+
+
+/* Exception Handling */
+Slightly different than usual
+
+try{
+	print(2~/0);
+}
+on IntegerDivisionByZeroException {
+	print("Can't divide by zero");
+}
+
+but you can also still
+try {
+	int result = 12~/0;
+}catch (e){
+	print("Error: $e");
+} finally {
+	print("This is always executed");
+}
+
+
+/* Custom Exceptions */
+class DepositException implements Exception {
+	String errorMessage(){
+		print("You cannot enter amount less than 0");
+	}
+}
+example
+void depositMoney(int amount){
+	if(amount <0){
+		throw new DepositException();
+	}
+}
+
+
+/* Classes */
+in dart the new keyword is optional
+there is no private or protected but you can make something only available to its self (kinda private lol)
+you add a _ to the beginning of the variable name
+so 
+string imPublic;
+string _imPrivate;
+
+Using "overloaded" constructors is different - you have to call the constructor specifically
+
+
+Class myThing{
+	string name;
+	myThing(){// Normal Constructor
+	}
+	myThingCustomConstructor(string name){ // Special constructor
+		this.name=name;
+	}
+}
+
+// in the wild
+var thing = myThing(); // remember new is omitted - so this uses the default constructor to make a new thing
+
+var initializedThing = myThing.myThingCustomConstructor("Beast"); // weird right?
+
+
+
+/* Class  Custom Getter Setter  */
+
+Class Student{
+	String name;
+	int percentage;
+	int percent;
+	void set percentage(int marksSecured){
+		percent = (marksSecured ~/ 500) * 100;
+	}
+	int get percentage { // notice this is same variable name as above in the class properties
+		return percent;
+	}
+}
+
+
+/* Inheritance */
+
+The syntax is
+
+class Dog extends Animal{
+	
+}
+
+Also calling the base class is like this
+
+class Dog extends Animal{ // its in super
+	print(super.name);
+}
+
+Another example
+class Dog extends Animal{
+	String breed;
+	Dog(String breed) : super("Black"){
+		print("Dog class constructor - but passed black to Animal constructor");
+	}
+}
+
+Dart supports Abstract classes
+Dart does not have interfaces - so here is work around
+
+class Remote {
+		void volumeUp(){
+			print("volume up");
+		}
+		void volumeDown(){
+			print("volume down");
+		}
+}
+class Television implements Remote{
+	//This requires us to override the methods/props of Remote
+	void volumeUp(){
+
+	}
+	void volumeDown(){
+
+	}
+}
+
+
+/* collections */
+LIST WORKS!!!
+// These are ordered with an index
+List<int> numbersList = List(5); // Fixed-length to 5
+List<int> numbersList = List(); // Dynamic - Growable list
+
+// unordered uses Set - No INDEX! must use foreach
+Set<String> countries = Set.from(["USA","CANADA","BRAZIL"]);
+
+example
+if(countries.contains("USA")){
+	// do something
+}
+countries.add("UK");
+countries.remove("UK");
+countries.length;
+countries.isEmpty;
+countries.clear(); // empties it

@@ -1,0 +1,12 @@
+Part 1: Hello World
+Part 2: Part 2: Your First App Assignment A: Roman Numeral Conversion App create an app that converts decimal numbers to roman numerals and vice versa.
+The app only needs to work for numbers 1 through at least 10. 
+
+Put the code for processing the conversion in it’s own class. 
+
+You are free to design the UI as you wish, but at a minimum it should have: 
+
+• One label with instructions for the user 
+• One TextField for entering either kind of number 
+• Two buttons, one to convert Roman numerals to decimals and another to convert decimal numbers to Roman numerals 
+• One label to display the results
